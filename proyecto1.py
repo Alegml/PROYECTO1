@@ -10,7 +10,13 @@ while True:
     if opcion == 1:
         nombre = input("Nombre del producto: ")
         precio = float(input("Precio del producto: ")) 
-        cantidad = int(input("Cantidad en stock: ")) 
+        cantidad = float(input("Cantidad en stock: "))
+        
+        while cantidad!= int((cantidad*10)//10):
+            print(f"No se puede vender {cantidad} de {nombre}")
+            cantidad = float(input("Cantidad en stock: "))
+        cantidad=int(cantidad*10)//10
+
         base_de_datos[nombre] = {'precio': precio, 'cantidad': cantidad}
     elif opcion == 2:
         total = 0
@@ -21,19 +27,26 @@ while True:
                 print("Lo sentimos, no tenemos este producto en nuestra tienda.")
             
             elif nombre in base_de_datos:
-                cantidad = int(input("Cantidad: "))
+                cantidad = float(input("Cantidad: "))
             
+                while cantidad!= int((cantidad*10)//10):
+                    print(f"No se puede vender {cantidad} de {nombre}")
+                    cantidad = float(input("Cantidad en stock: "))
+                    cantidad=int(cantidad*10)//10
+
                 if cantidad > base_de_datos[nombre]['cantidad']:
                     print("Lo sentimos, no tenemos suficiente stock de este producto.")
                 
                 elif cantidad <= 0:
                     print("La cantidad debe ser mayor que 0.")
                 
-                lista_de_compras.append({'nombre': nombre, 'precio': base_de_datos[nombre]['precio'], 'cantidad': cantidad})
-                base_de_datos[nombre]['cantidad'] -= cantidad
-                exit = input("¿Quieres agregar otro producto? (s/n): ")
-                if exit.lower() == 'n':
-                    break
+                else:
+                    lista_de_compras.append({'nombre': nombre, 'precio': base_de_datos[nombre]['precio'], 'cantidad': cantidad})
+                    base_de_datos[nombre]['cantidad'] -= cantidad
+                    exit = input("¿Quieres agregar otro producto? (s/n): ")
+
+                    if exit.lower() == 'n':
+                        break
         print("-----Resumen de compra-----")
         for producto in lista_de_compras:
             total += producto['precio'] * producto['cantidad']
@@ -43,6 +56,7 @@ while True:
         break
     else:
         print("Opción inválida. Inténtalo de nuevo.")
+
 
 
 
