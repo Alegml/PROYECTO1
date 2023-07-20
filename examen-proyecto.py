@@ -30,39 +30,43 @@ elif intentos==0:
 
 #Ejercicio del Caracol
 
-H = float(input("Introduce la profundidad del pozo en metros: "))
-Ld = float(input("Introduce la distancia que el caracol asciende durante el día en metros: "))
-Ln = float(input("Introduce la distancia que el caracol desciende durante la noche en metros: "))
+H = float(input("Profundidad del pozo en metros: "))
+Ld = float(input("Distancia que el caracol asciende durante el día en metros: "))
+Ln = float(input("Distancia que el caracol desciende durante la noche en metros: "))
 
-dias = 1
-altura_actual = Ld
-if Ld>Ln:
-    while altura_actual < H:
-        altura_actual -= Ln
-        altura_actual += Ld
-        dias += 1
+dias = 0
+comienzo = 0
+if Ld > Ln:
+    while comienzo < H:
+        comienzo = comienzo + Ld -Ln
+        dias = dias + 1
     print(f"El caracol tardará {dias} días en salir del pozo.")
 
-else:
-    print("El caracol no sale :(")
+if Ld <= Ln:
+    print("el caracol no sale")
 
 #Matriz de NxM
 
 n = int(input("Introduce el número de filas de la matriz: "))
 m = int(input("Introduce el número de columnas de la matriz: "))
+matrix=[]
 
-matrix = [[0]*m for i in range(n)]
+for i in range(n):
+    fila=[]
+    for j in range (m):
+        fila.append(0)
+    matrix.append(fila)
 
 num = 1
+
 for i in range(n):
-    if i % 2 == 0:
-        for j in range(m):
-            matrix[i][j] = num
-            num += 1
-    else:
-        for j in range(m-1, -1, -1):
-            matrix[i][j] = num
-            num += 1
+    for j in range(m):
+        matrix[i][j]=num
+        num= num+ 1
+
+for i in range(n):
+    if i%2 != 0:
+        matrix[i]=list(reversed(matrix[i]))
 
 for fila in matrix:
     print(fila)
